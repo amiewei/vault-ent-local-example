@@ -11,18 +11,29 @@ echo $HOSTIP
 ### DEPLOY VAULT 
 
 export VAULT_ADDR=http://${HOSTIP}:8200
+echo $VAULT_ADDR
+
+echo "vault namespace:"
+echo $VAULT_NAMESPACE
+
+unset VAULT_NAMESPACE
+echo "vault namespace:"
+echo $VAULT_NAMESPACE
 
 vault operator init -key-shares=1  -key-threshold=1 --format json >> init.txt
 export ROOT_TOKEN=$(cat init.txt | jq -r .root_token)
 export UNSEAL_KEY=$(cat init.txt | jq -r .unseal_keys_b64[0])
 
-echo 'root token & unseal key'
+echo 'root token & unseal key:'
 echo $ROOT_TOKEN
 echo $UNSEAL_KEY
+
+export VAULT_TOKEN=$ROOT_TOKEN
 
 vault operator unseal $UNSEAL_KEY
 vault login $ROOT_TOKEN
 
+vault token lookup
 
 #Create admin user
 echo '
@@ -39,7 +50,7 @@ vault secrets enable database
 vault kv put secret/my-app-secret username=application-user password=application-password
 
 
-### DEPLOY VAULT POLICIES
+## DEPLOY VAULT POLICIES
 
 echo '
 path "secret/data/my-secret" {

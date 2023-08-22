@@ -1,8 +1,9 @@
-1. Create .env file and input the vault license and your hostip address
+1. Create .env file and input the vault license
 
 ```
 VAULT_LICENSE=abcd
-HOSTIP=1.1.1.1
 ```
 
 2. Create vault.hcl file by running ./generate-vault-config.sh
+
+3. Run docker compose up -d

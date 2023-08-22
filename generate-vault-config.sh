@@ -1,6 +1,10 @@
 #!/bin/sh
 
+# get local ip
 HOSTIP=$(ipconfig getifaddr en0)
+
+# Create the directory if it doesn't exist
+mkdir -p config/vault/config
 
 # Create the vault.config file
 cat <<EOL > config/vault/config/vault.hcl
