@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  vault-enterprise:
+    image: hashicorp/vault-enterprise
+    container_name: vault-enterprise
+    ports:
+      - "8200:8200"
+    restart: always
+    volumes:
+      - ./config/vault/logs:/vault/logs
+      - ./config/vault/file:/vault/file
+      - ./config/vault/config:/vault/config
+    environment: 
+      - VAULT_LICENSE=${VAULT_LICENSE}
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault.hcl 
