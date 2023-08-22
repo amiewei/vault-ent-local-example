@@ -43,3 +43,4 @@ vault-cluster-role.yaml
 ./config/boundary/file/* 
 ./config/vault/file/* 
 TODO.md
+config
